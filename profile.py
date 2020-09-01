@@ -8,6 +8,10 @@ import geni.portal as portal
 import geni.rspec.pg as pg
 import geni.rspec.emulab as emulab
 
+# define some constants
+UBUNTU18_IMG = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+HARDWARE_TYPE = "pc3000"
+
 # create a portal context, needed to define parameters
 pc = portal.Context()
 
@@ -16,9 +20,6 @@ request = pc.makeRequestRSpec()
 
 # node count parameter
 pc.defineParameter('node_count', 'Number of nodes', portal.ParameterType.INTEGER, 2)
-
-
-UBUNTU18_IMG = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 
 params = pc.bindParameters()
 
