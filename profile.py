@@ -48,6 +48,9 @@ for i in range(params.node_count):
     # set the OS on each node
     node.disk_image = UBUNTU18_IMG
 
+    # run install scripts on each node
+    node.addService(pg.Execute(shell='sh', command='chmod +x /local/repository/install.sh'))
+    node.addService(pg.Execute(shell='sh', command='/local/repository/install.sh'))
 
 # output RSpec
 pc.printRequestRSpec(request)
