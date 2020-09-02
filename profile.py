@@ -34,6 +34,14 @@ if params.node_count > 1:
     else:
         lan = request.LAN()
 
+
+def run_bash_script(this_node, script_name):
+    """Runs a bash script on a specific node."""
+
+    this_node.addService(pg.Execute(shell='sh', command='chmod +x /local/repository/' + script_name))
+    node.addService(pg.Execute(shell='sh', command='/local/repository/' + script_name))
+
+
 for i in range(params.node_count):
     # create a node
     node = request.RawPC('node' + str(i))
@@ -48,9 +56,14 @@ for i in range(params.node_count):
     # set the OS on each node
     node.disk_image = UBUNTU18_IMG
 
+    # install management software on first node
+    if i == 0:
+        run_bash_script(node, 'install_snmp_manager.sh')
+
     # run install scripts on each node
-    node.addService(pg.Execute(shell='sh', command='chmod +x /local/repository/install.sh'))
-    node.addService(pg.Execute(shell='sh', command='/local/repository/install.sh'))
+    run_bash_script(node, 'install_snmp_agent.sh')
+    run_bash_script(node, 'install_docker.sh')
+
 
 # output RSpec
 pc.printRequestRSpec(request)
