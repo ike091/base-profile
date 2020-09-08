@@ -7,7 +7,7 @@ RUN apt-get update \
 && apt-get install -y dpkg
 
 # install SNMP MIB tool
-RUN apt-get install snmp-mibs-downloader
+RUN apt-get install -y snmp-mibs-downloader
 
 # install telegraf
 RUN wget https://dl.influxdata.com/telegraf/releases/telegraf_1.15.2-1_amd64.deb \
