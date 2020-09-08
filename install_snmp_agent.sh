@@ -16,3 +16,6 @@ sudo cp /local/repository/snmpd.conf /etc/snmp/snmpd.conf
 
 # start service
 sudo service snmpd start
+
+# restart service (seems to be needed for non-default configuration to load)
+sudo service snmpd restart
