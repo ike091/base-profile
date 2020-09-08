@@ -17,11 +17,11 @@ WORKDIR /usr/src/app
 COPY . .
 
 # copy telegraf configuration file into proper location
-COPY ./telegraf.conf /etc/telegraf/telegraf.conf
+# COPY ./telegraf.conf /etc/telegraf/telegraf.conf
 
 # start the telegraf service
-# CMD ["telegraf", "--config", "./telegraf.conf"]
-CMD ["service", "telegraf", "start"]
+CMD ["telegraf", "--config", "./telegraf.conf"]
+# CMD ["service", "telegraf", "start"]
 
 # expose required ports here (191?)
 EXPOSE 191
