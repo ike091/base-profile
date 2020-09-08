@@ -1,17 +1,15 @@
-
 # use ubuntu 18.04 as the base image
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y wget && 
+# install software to install telegraf
+RUN apt-get update && apt-get install -y wget
 RUN apt-get install -y dpkg
 
+# install telegraf
 RUN wget https://dl.influxdata.com/telegraf/releases/telegraf_1.15.2-1_amd64.deb
 RUN dpkg -i telegraf_1.15.2-1_amd64.deb
 
-# install telegraf
-RUN sh install_telegraph.sh
-
-# set a directory for this app
+# set a working directory for this app
 WORKDIR /usr/src/app
 
 # copy files into container
