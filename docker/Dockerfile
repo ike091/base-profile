@@ -24,7 +24,7 @@ COPY . .
 # COPY ./telegraf.conf /etc/telegraf/telegraf.conf
 
 # start the telegraf service
-# CMD ["telegraf", "--config", "./telegraf.conf"]
+CMD ["telegraf", "--config", "./telegraf.conf"]
 # CMD ["service", "telegraf", "start"]
 
 # expose required ports here (191?)
