@@ -10,7 +10,7 @@ import geni.rspec.emulab as emulab
 
 # define some constants
 UBUNTU18_IMG = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
-SUPPORTED_HARDWARE_TYPES = ['pc3000', 'd430']
+SUPPORTED_HARDWARE_TYPES = ['pc3000', 'd430', 'd710']
 
 # create a portal context, needed to define parameters
 pc = portal.Context()
@@ -20,7 +20,8 @@ request = pc.makeRequestRSpec()
 
 # node count parameter
 pc.defineParameter('node_count', 'Number of nodes', portal.ParameterType.INTEGER, 2)
-pc.defineParameter('node_type', 'Type of physical node to instantiate on', portal.ParameterType.STRING, 'pc3000')
+pc.defineParameter('node_type_master', 'Type of physical node to instantiate master controller on', portal.ParameterType.STRING, 'd710')
+pc.defineParameter('node_type_worker', 'Type of physical node to instantiate workers on (pc3000, d430, d710)', portal.ParameterType.STRING, 'pc3000')
 
 params = pc.bindParameters()
 
@@ -28,9 +29,11 @@ params = pc.bindParameters()
 if params.node_count < 1:
     pc.reportError(portal.ParameterError('You must choose at least 1 node.', ['node_count']))
 
-# validate hardware choice
-if params.node_type not in SUPPORTED_HARDWARE_TYPES:
-    pc.reportError(portal.ParameterError('You must choose a valid hardware type.', ['node_type']))
+# validate hardware choices
+if params.node_type_worker not in SUPPORTED_HARDWARE_TYPES:
+    pc.reportError(portal.ParameterError('You must choose a valid hardware type.', ['node_type_worker']))
+if params.node_type_master not in SUPPORTED_HARDWARE_TYPES:
+    pc.reportError(portal.ParameterError('You must choose a valid hardware type.', ['node_type_master']))
 
 pc.verifyParameters()
 
@@ -57,7 +60,11 @@ for i in range(params.node_count):
         lan.addInterface(iface)
 
     # set the hardware type of each node
-    node.hardware_type = params.node_type
+    if i == 0:
+        node.hardware_type = params.node_type_master
+    elif:
+        node.hardware_type = params.node_type_worker
+
 
     # set the OS on each node
     node.disk_image = UBUNTU18_IMG
