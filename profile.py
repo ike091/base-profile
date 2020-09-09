@@ -62,7 +62,7 @@ for i in range(params.node_count):
     # set the hardware type of each node
     if i == 0:
         node.hardware_type = params.node_type_master
-    elif:
+    else:
         node.hardware_type = params.node_type_worker
 
 
