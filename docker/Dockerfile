@@ -27,5 +27,8 @@ COPY . .
 CMD ["telegraf", "--config", "./telegraf.conf"]
 # CMD ["service", "telegraf", "start"]
 
+# remove default snmp.conf to allow proper mibs to load
+CMD ["rm", "/etc/snmp/snmp.conf"]
+
 # expose required ports here (191?)
 EXPOSE 161
