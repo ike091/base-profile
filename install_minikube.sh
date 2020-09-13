@@ -2,7 +2,7 @@
 
 # installs minikube and virtualbox (Ubuntu 18.04)
 
-sudo apt-add-repository deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian bionic contrib
+sudo apt-add-repository deb [arch=amd64] "https://download.virtualbox.org/virtualbox/debian bionic contrib"
 
 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 
