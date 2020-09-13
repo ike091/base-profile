@@ -44,11 +44,11 @@ if params.node_count > 1:
         lan = request.LAN()
 
 
-def run_bash_script(this_node, script_name):
-    """Runs a bash script on a specific node."""
+def run_install_script(this_node, script_name):
+    """Runs a bash script from the install/ on a specific node."""
 
-    this_node.addService(pg.Execute(shell='sh', command='chmod +x /local/repository/' + script_name))
-    this_node.addService(pg.Execute(shell='sh', command='/local/repository/' + script_name))
+    this_node.addService(pg.Execute(shell='sh', command='chmod +x /local/repository/install/' + script_name))
+    this_node.addService(pg.Execute(shell='sh', command='/local/repository/install/' + script_name))
 
 
 for i in range(params.node_count):
@@ -71,7 +71,7 @@ for i in range(params.node_count):
 
     # install management software on first node
     if i == 0:
-        run_bash_script(node, 'install_snmp_manager.sh')
+        run_install_script(node, 'install_snmp_manager.sh')
 
     # run install scripts on each node
     run_bash_script(node, 'install_snmp_agent.sh')
