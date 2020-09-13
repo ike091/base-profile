@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: telegraf-pod
+spec:
+  containers:
+   - name: telegraf
+      image: ike091/telegraf:latest
+      ports:
+      - containerPort: 80
