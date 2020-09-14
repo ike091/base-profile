@@ -23,12 +23,13 @@ COPY . .
 # copy telegraf configuration file into proper location
 # COPY ./telegraf.conf /etc/telegraf/telegraf.conf
 
-# start the telegraf service
-CMD ["telegraf", "--config", "./telegraf.conf"]
-# CMD ["service", "telegraf", "start"]
-
 # remove default snmp.conf to allow proper mibs to load
 CMD ["rm", "/etc/snmp/snmp.conf"]
+
+# start the telegraf service
+# CMD ["telegraf", "--config", "./telegraf.conf"]
+# CMD ["service", "telegraf", "start"]
+CMD ["./run_telegraf.sh"]
 
 # expose required ports here (191?)
 EXPOSE 161
