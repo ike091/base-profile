@@ -74,8 +74,8 @@ for i in range(params.node_count):
         run_install_script(node, 'install_snmp_manager.sh')
 
     # run install scripts on each node
-    run_bash_script(node, 'install_snmp_agent.sh')
-    run_bash_script(node, 'install_docker.sh')
+    run_install_script(node, 'install_snmp_agent.sh')
+    run_install_script(node, 'install_docker.sh')
 
 
 # output RSpec
