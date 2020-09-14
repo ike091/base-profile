@@ -13,7 +13,7 @@ spec:
         app: web
     spec:
       containers:
-       - name: telegraf
+        - name: telegraf
           image: ike091/telegraf:latest
           ports:
-          - containerPort: 80
+            - containerPort: 80
