@@ -16,4 +16,4 @@ spec:
         - name: telegraf
           image: ike091/telegraf:latest
           ports:
-            - containerPort: 80
+            - containerPort: 161
