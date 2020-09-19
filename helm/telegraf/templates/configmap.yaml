@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}--configmap
 data:
-  {{ .Files.telegraf-helm.conf }}
+  {{ .Files.telegraf_helm.conf }}
   myvalue: "Hello World"
