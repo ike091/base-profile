@@ -12,7 +12,7 @@ sudo apt update
 sudo apt install snmpd -y
 
 # copy configuration file
-sudo cp /local/repository/snmpd.conf /etc/snmp/snmpd.conf
+sudo cp /local/repository/config/snmpd.conf /etc/snmp/snmpd.conf
 
 # start service
 sudo service snmpd start

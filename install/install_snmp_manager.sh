@@ -9,4 +9,4 @@ sudo apt update
 sudo apt install snmp snmp-mibs-downloader -y
 
 # update configuration file
-sudo cp /local/repository/snmp.conf /etc/snmp/snmp.conf
+sudo cp /local/repository/config/snmp.conf /etc/snmp/snmp.conf

@@ -1,3 +1,5 @@
 # base-profile
 
-Describes a simple LAN on Cloudlab.
+Sets up a variable number of hosts in a LAN on Cloudlab.
+
+Also contains materials for learning and experimenting with Docker, Kubernetes, Telegraf, SNMP, and Helm.
