@@ -20,11 +20,18 @@ spec:
       containers:
         - name: telegraf
           image: ike091/telegraf:latest
+
           volumeMounts:
             - mountPath: /usr/src/app
               name: config-volume 
+
           ports:
             - containerPort: 161
+
       volumes:
         - name: config-volume
-          emptyDir: {}
+          # populate volume with config map data
+          configMap:
+            name: {{ .Release.Name }}--configmap
+          # use this for creating an empty ephemeral volume
+          # emptyDir: {}
