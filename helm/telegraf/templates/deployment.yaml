@@ -22,14 +22,14 @@ spec:
           image: ike091/telegraf:latest
 
           volumeMounts:
-            - mountPath: /usr/src/app
-              name: config-volume 
+            - mountPath: /etc/config
+              name: telegraf-volume 
 
           ports:
             - containerPort: 161
 
       volumes:
-        - name: config-volume
+        - name: telegraf-volume
           # populate volume with config map data
           configMap:
             name: {{ .Release.Name }}--configmap
