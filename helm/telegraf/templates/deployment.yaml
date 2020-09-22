@@ -1,8 +1,13 @@
+# describes a Kubernetes deployment of the ike091/telegraf container
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: telegraf-pod
+
+
 spec:
+
   replicas: 1
   selector:
     matchLabels:
@@ -15,5 +20,11 @@ spec:
       containers:
         - name: telegraf
           image: ike091/telegraf:latest
+          volumeMounts:
+            - mountPath: /usr/src/app
+              name: config-volume 
           ports:
             - containerPort: 161
+      volumes:
+        - name: config-volume
+          emptyDir: {}
