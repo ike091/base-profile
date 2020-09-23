@@ -29,7 +29,7 @@ CMD ["rm", "/etc/snmp/snmp.conf"]
 # start the telegraf service
 # CMD ["telegraf", "--config", "./telegraf.conf"]
 # CMD ["service", "telegraf", "start"]
-CMD ["./run_telegraf.sh"]
+CMD ["bash", "./run_telegraf.sh"]
 
 # expose required ports here (191?)
 EXPOSE 161
