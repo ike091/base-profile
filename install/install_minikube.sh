@@ -9,7 +9,7 @@ sudo apt-get update
 sudo apt-get install -y virtualbox-6.1
 
 # install minikube
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
+sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
 sudo mkdir -p /usr/local/bin/
 sudo install minikube /usr/local/bin/
 sudo rm minikube
