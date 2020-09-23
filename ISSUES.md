@@ -9,6 +9,7 @@
 ## To-do:
 * Modify chart such that the Telegraf configuration file is not baked into the Docker container image.
 * Figure out if any templates under `helm/old/` are needed
+* Fix encoding problem with telegraf.conf
 
 ## Bugs:
 * Telegraf configuration file is baked into container image.
