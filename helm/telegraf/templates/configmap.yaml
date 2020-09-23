@@ -4,8 +4,14 @@ metadata:
   name: {{ .Release.Name }}--configmap
 
 data:
-  {{ (tpl (.Files.Glob "telegraf/telegraf.conf").AsConfig . ) | indent 2 }} 
-  # myvalue: "Hello World"
+  myvalue: "Hello world"
+  mysecondvalue: "test"
+  telegraf.conf: {{ .Files.Get "files/telegraf.conf" | b64enc }}
+
+
+  # {{ (tpl (.Files.Glob "telegraf/telegraf.conf").AsConfig . ) | indent 2 }} 
+
+
   # hosts:
     # - host: 10.10.1.2
     # - host: 10.10.1.3
