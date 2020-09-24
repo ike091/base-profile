@@ -4,9 +4,8 @@ metadata:
   name: {{ .Release.Name }}-configmap
 
 data:
-  myvalue: "Hello world"
-  mysecondvalue: "test"
-  telegraf.conf: {{ .Files.Get "files/telegraf.conf" | b64enc }}
+  {{ .Files.Get "files/telegraf.conf" | quote }}
+  # telegraf.conf: {{ .Files.Get "files/telegraf.conf" | b64enc }}
 
 
   # {{ (tpl (.Files.Glob "telegraf/telegraf.conf").AsConfig . ) | indent 2 }} 

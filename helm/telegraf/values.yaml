@@ -8,7 +8,7 @@ replicaCount: 1
 image:
   repository: ike091/telegraf
   tag: latest 
-  # pullPolicy: Always # TODO: figure this out
+  # pullPolicy: Always # TODO: implement
 
 
 # specify hosts to monitor here (not implemented)
