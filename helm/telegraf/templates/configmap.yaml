@@ -5,4 +5,50 @@ metadata:
 
 # store Telegraf configuration file
 data:
-  "telegraf.conf": {{ .Files.Get "files/telegraf.conf" | quote }}
+  # "telegraf.conf": {{ .Files.Get "files/telegraf.conf" | quote }}
+  "telegraf.conf": |-
+    [global_tags]
+
+    # Configuration for telegraf agent
+    [agent]
+      interval = "5s"
+      round_interval = true
+      metric_batch_size = 1000
+      metric_buffer_limit = 10000
+      collection_jitter = "0s"
+      flush_interval = "10s"
+      flush_jitter = "0s"
+      precision = ""
+      hostname = ""
+      omit_hostname = false
+
+    # Send telegraf metrics to file(s)
+    [[outputs.file]]
+      # Files to write to
+      files = ["/usr/src/app/metrics.out"]
+      data_format = "influx"
+
+    [[inputs.snmp]]
+      ## Agent addresses to retrieve values from.
+      ##   example: agents = ["udp://127.0.0.1:161"]
+      ##            agents = ["tcp://127.0.0.1:161"]
+      # agents = ["udp://127.0.0.1:161"]
+      agents = ["udp://10.10.1.2:161", "udp://10.10.1.3:161"]
+      timeout = "5s"
+      version = 2
+      community = "public"
+      retries = 3
+      max_repetitions = 10
+
+      # SNMP oids to poll
+      [[inputs.snmp.field]]
+        oid = "DISMAN-EVENT-MIB::sysUpTimeInstance"
+        name = "uptime"
+
+      [[inputs.snmp.field]]
+        oid = "UCD-SNMP-MIB::laLoad.1"
+        name = "cpu1"
+
+      [[inputs.snmp.field]]
+        oid = "UCD-SNMP-MIB::laLoad.2"
+        name = "cpu2"

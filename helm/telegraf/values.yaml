@@ -11,6 +11,9 @@ image:
   # pullPolicy: Always # TODO: implement
 
 
+# if useCustomConfig is set to true, host and oid values are overwritten
+# useCustomConfig: true
+
 # specify hosts to monitor here (not implemented)
 hosts:
   - 10.10.1.2
