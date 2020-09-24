@@ -33,5 +33,3 @@ spec:
           # populate volume with config map data
           configMap:
             name: {{ .Release.Name }}-configmap
-          # use this for creating an empty ephemeral volume
-          # emptyDir: {}
