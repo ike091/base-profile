@@ -8,7 +8,7 @@ metadata:
 
 spec:
 
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: web
@@ -19,7 +19,8 @@ spec:
     spec:
       containers:
         - name: telegraf
-          image: ike091/telegraf:latest
+          # image: ike091/telegraf:latest
+          image: {{ .Values.repository }}:{{ .Values.tag }}
 
           volumeMounts:
             - mountPath: /etc/config
@@ -32,6 +33,6 @@ spec:
         - name: telegraf-volume
           # populate volume with config map data
           configMap:
-            name: {{ .Release.Name }}--configmap
+            name: {{ .Release.Name }}-configmap
           # use this for creating an empty ephemeral volume
           # emptyDir: {}
