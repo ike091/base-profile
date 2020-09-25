@@ -7,22 +7,25 @@ replicaCount: 1
 # the image to use
 image:
   repository: ike091/telegraf
-  tag: latest 
+  tag: latest
   # pullPolicy: Always # TODO: implement
 
 
 # if useCustomConfig is set to true, host and oid values are overwritten
 # useCustomConfig: true
 
-# specify hosts to monitor here (not implemented)
+# specify hosts to monitor here
 hosts:
-  - 10.10.1.2
-  - 10.10.1.3
+  - "10.10.1.2"
+  - "10.10.1.3"
+  - "10.10.1.4"
 
+port: "161" # (not implemented)
+protocol: "udp" # (not implemented)
 
 # specify OIDs to monitor here: (not implemented)
 oids:
-  - sysUpTime.0
+  - "sysUpTime.0"
 
 
 

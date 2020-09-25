@@ -33,7 +33,10 @@ data:
       ##   example: agents = ["udp://127.0.0.1:161"]
       ##            agents = ["tcp://127.0.0.1:161"]
       # agents = ["udp://127.0.0.1:161"]
-      agents = ["udp://10.10.1.2:161", "udp://10.10.1.3:161"]
+      # agents = ["udp://10.10.1.2:161", "udp://10.10.1.3:161"]
+      agents = [{{- range $value := .Values.hosts }}
+      "udp://{{ $value }}:161",
+      {{ end -}}]
       timeout = "5s"
       version = 2
       community = "public"
