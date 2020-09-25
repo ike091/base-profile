@@ -72,6 +72,7 @@ for i in range(params.node_count):
     # install management software on first node
     if i == 0:
         run_install_script(node, 'install_snmp_manager.sh')
+        run_install_script(node, 'install_slate_cli.sh')
         run_install_script(node, 'install_minikube.sh')
         run_install_script(node, 'install_helm.sh')
 

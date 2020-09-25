@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# this script automatically installs docker on an Ubuntu 18.04 machine.
+# This script automatically installs docker on an Ubuntu 18.04 machine.
 
 # update package index
 sudo apt-get update
