@@ -3,23 +3,26 @@
 # the number of pods to spin up
 replicaCount: 1
 
-
 # the image to use
 image:
   repository: ike091/telegraf
-  tag: latest 
+  tag: latest
   # pullPolicy: Always # TODO: implement
 
 
-# specify hosts to monitor here (not implemented)
-hosts:
-  - 10.10.1.2
-  - 10.10.1.3
+# If useCustomConfig is set to true, all values below will be overwritten.
+# Otherwise, the values below will be used to set up SNMP monitoring.
+useCustomConfig: true
 
+# specify hosts to monitor here
+hosts:
+  - "10.10.1.2"
+  - "10.10.1.3"
+  - "10.10.1.4"
+
+port: "161" # (not implemented)
+protocol: "udp" # (not implemented)
 
 # specify OIDs to monitor here: (not implemented)
 oids:
-  - sysUpTime.0
-
-
-
+  - "sysUpTime.0"
