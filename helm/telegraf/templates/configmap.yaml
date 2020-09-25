@@ -5,7 +5,11 @@ metadata:
 
 # store Telegraf configuration file
 data:
-  # "telegraf.conf": {{ .Files.Get "files/telegraf.conf" | quote }}
+  {{ if eq .Values.useCustomConfig true }}
+    "telegraf.conf": {{ .Files.Get "files/telegraf.conf" | quote }}
+  {{ end }}
+
+  {{ if ne .Values.useCustomConfig true }}
   "telegraf.conf": |-
     [global_tags]
 
@@ -55,3 +59,5 @@ data:
       [[inputs.snmp.field]]
         oid = "UCD-SNMP-MIB::laLoad.2"
         name = "cpu2"
+
+  {{ end }}
