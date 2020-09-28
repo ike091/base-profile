@@ -75,6 +75,7 @@ for i in range(params.node_count):
         run_install_script(node, 'install_slate_cli.sh')
         run_install_script(node, 'install_minikube.sh')
         run_install_script(node, 'install_helm.sh')
+        run_install_script(node, 'install_docker_compose.sh')
 
     # run install scripts on each node
     run_install_script(node, 'install_snmp_agent.sh')
