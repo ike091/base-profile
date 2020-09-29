@@ -1,5 +1,8 @@
 # Values for the this Telegraf Helm chart
 
+# the slate instance value
+Instance: ""
+
 # the number of pods to spin up
 replicaCount: 1
 

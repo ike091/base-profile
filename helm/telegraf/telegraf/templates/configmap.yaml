@@ -1,7 +1,12 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-configmap
+  name: telegraf-{{ .Values.Instance }}-configuration
+    labels:
+      app: {{ template "telegraf.name" . }}
+      chart: {{ template "telegraf.chart" . }}
+      release: {{ .Release.Name }}
+      instance: {{ .Values.Instance | quote }}
 
 # store Telegraf configuration file
 data:

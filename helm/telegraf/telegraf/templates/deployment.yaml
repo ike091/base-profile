@@ -3,19 +3,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-deployment
-
-
+  name: {{ template "telegraf.fullname" . }}
+  labels:
+    app: {{ template "telegraf.name" . }}
+    chart: {{ template "telegraf.chart" . }}
+    release: {{ .Release.Name }}
+    instance: {{ .Values.Instance | quote }}
 spec:
-
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: web
+      app: {{ template "telegraf.name" . }}
+      instance: {{ .Values.Instance | quote }}
+      release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: web
+        app: {{ template "telegraf.name" . }}
+        chart: {{ template "telegraf.chart" . }}
+        instance: {{ .Values.Instance | quote }}
+        release: {{ .Release.Name }}
     spec:
       containers:
         - name: telegraf
@@ -32,4 +39,4 @@ spec:
         - name: telegraf-volume
           # populate volume with config map data
           configMap:
-            name: {{ .Release.Name }}-configmap
+            name: telegraf-{{ .Values.Instance }}-configuration
