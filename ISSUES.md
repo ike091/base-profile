@@ -5,7 +5,8 @@
 * Stream logs to database
 
 ## To-do:
-* Figure out if any templates under `helm/old/` are needed
-* Deploy on MiniSLATE
+* Create Kubernetes cluster on Cloudlab and register cluster with SLATE
+* Deploy on Cloudlab-hosted SLATE cluster
+* Stream logs to Prometheus database
 
 ## Bugs:

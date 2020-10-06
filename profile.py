@@ -7,10 +7,16 @@ Wait for the profile instance to start, and then log into nodes via the ssh port
 import geni.portal as portal
 import geni.rspec.pg as pg
 import geni.rspec.emulab as emulab
+import geni.rspec.igext as igext
 
 # define some constants
 UBUNTU18_IMG = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
+CENTOS7_IMG = 'urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD'
 SUPPORTED_HARDWARE_TYPES = ['pc3000', 'd430', 'd710']
+SUPPORTED_OPERATING_SYSTEMS = ['ubuntu', 'centos7']
+
+# the number of extra public ip addresses to allocate
+NUM_IP_ADDRESSES = 2
 
 # create a portal context, needed to define parameters
 pc = portal.Context()
@@ -20,8 +26,9 @@ request = pc.makeRequestRSpec()
 
 # node count parameter
 pc.defineParameter('node_count', 'Number of nodes', portal.ParameterType.INTEGER, 2)
-pc.defineParameter('node_type_master', 'Type of physical node to instantiate master controller on', portal.ParameterType.STRING, 'd710')
-pc.defineParameter('node_type_worker', 'Type of physical node to instantiate workers on (pc3000, d430, d710)', portal.ParameterType.STRING, 'pc3000')
+pc.defineParameter('node_type_master', 'Type of physical node to instantiate master controller on', portal.ParameterType.STRING, 'd430')
+pc.defineParameter('node_type_worker', 'Type of physical node to instantiate workers on (pc3000, d430, d710)', portal.ParameterType.STRING, 'd710')
+pc.defineParameter('operating_system', 'Operating system to install on host. (ubuntu or centos7) Note that automatic software install is only supported for Ubuntu at this time.', portal.ParameterType.STRING, 'ubuntu')
 
 params = pc.bindParameters()
 
@@ -34,6 +41,10 @@ if params.node_type_worker not in SUPPORTED_HARDWARE_TYPES:
     pc.reportError(portal.ParameterError('You must choose a valid hardware type.', ['node_type_worker']))
 if params.node_type_master not in SUPPORTED_HARDWARE_TYPES:
     pc.reportError(portal.ParameterError('You must choose a valid hardware type.', ['node_type_master']))
+
+# validate operating system
+if params.operating_system not in SUPPORTED_OPERATING_SYSTEMS:
+    pc.reportError(portal.ParameterError('You must choose a valid operating system.', ['operating_system']))
 
 pc.verifyParameters()
 
@@ -67,19 +78,31 @@ for i in range(params.node_count):
 
 
     # set the OS on each node
-    node.disk_image = UBUNTU18_IMG
+    if params.operating_system == 'ubuntu':
+        node.disk_image = UBUNTU18_IMG
+    elif params.operating_system == 'centos7':
+        node.disk_image = CENTOS7_IMG
 
-    # install management software on first node
-    if i == 0:
-        run_install_script(node, 'install_snmp_manager.sh')
-        run_install_script(node, 'install_slate_cli.sh')
-        run_install_script(node, 'install_minikube.sh')
-        run_install_script(node, 'install_helm.sh')
-        run_install_script(node, 'install_docker_compose.sh')
+    # request a pool of dynamic publically routable ip addresses
+    pool = igext.AddressPool("address_pool", NUM_IP_ADDRESSES)
+    request.addResource(pool)
 
-    # run install scripts on each node
-    run_install_script(node, 'install_snmp_agent.sh')
-    run_install_script(node, 'install_docker.sh')
+    # run different scripts based on operating system
+    if params.operating_system == 'ubuntu':
+        # install management software on first node
+        if i == 0:
+            run_install_script(node, 'install_snmp_manager.sh')
+            run_install_script(node, 'install_slate_cli.sh')
+            run_install_script(node, 'install_minikube.sh')
+            run_install_script(node, 'install_helm.sh')
+            run_install_script(node, 'install_docker_compose.sh')
+        # run install scripts on each node
+        run_install_script(node, 'install_snmp_agent.sh')
+        run_install_script(node, 'install_docker.sh')
+
+    elif params.operating_system == 'centos7':
+        # put centos7-specific install scripts and configuration here
+        pass
 
 
 # output RSpec
