@@ -83,10 +83,6 @@ for i in range(params.node_count):
     elif params.operating_system == 'centos7':
         node.disk_image = CENTOS7_IMG
 
-    # request a pool of dynamic publically routable ip addresses
-    pool = igext.AddressPool("address_pool", NUM_IP_ADDRESSES)
-    request.addResource(pool)
-
     # run different scripts based on operating system
     if params.operating_system == 'ubuntu':
         # install management software on first node
@@ -104,6 +100,11 @@ for i in range(params.node_count):
         # put centos7-specific install scripts and configuration here
         pass
 
+
+# request a pool of dynamic publically routable ip addresses
+address_pool = igext.AddressPool('address_pool', NUM_IP_ADDRESSES)
+address_pool.component_manager_id = 'urn:publicid:IDN+utah.cloudlab.us+authority+cm'
+request.addResource(address_pool)
 
 # output RSpec
 pc.printRequestRSpec(request)
