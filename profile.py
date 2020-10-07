@@ -16,7 +16,7 @@ SUPPORTED_HARDWARE_TYPES = ['pc3000', 'd430', 'd710']
 SUPPORTED_OPERATING_SYSTEMS = ['ubuntu', 'centos7']
 
 # the number of extra public ip addresses to allocate
-NUM_IP_ADDRESSES = 2
+NUM_IP_ADDRESSES = 3
 
 # create a portal context, needed to define parameters
 pc = portal.Context()
@@ -98,12 +98,15 @@ for i in range(params.node_count):
 
     elif params.operating_system == 'centos7':
         # put centos7-specific install scripts and configuration here
-        pass
+        if i == 0:
+            run_install_script(node, 'install_kubernetes_cluster.sh')
+        else:
+            run_install_script(node, 'install_kubernetes_worker_node.sh')
 
 
 # request a pool of dynamic publically routable ip addresses
 address_pool = igext.AddressPool('address_pool', NUM_IP_ADDRESSES)
-address_pool.component_manager_id = 'urn:publicid:IDN+utah.cloudlab.us+authority+cm'
+address_pool.component_manager_id = ('urn:publicid:IDN+utah.cloudlab.us+authority+cm')
 request.addResource(address_pool)
 
 # output RSpec
