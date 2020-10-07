@@ -106,7 +106,7 @@ for i in range(params.node_count):
 
 # request a pool of dynamic publically routable ip addresses
 address_pool = igext.AddressPool('address_pool', NUM_IP_ADDRESSES)
-address_pool.component_manager_id = ('urn:publicid:IDN+utah.cloudlab.us+authority+cm')
+address_pool.component_manager_id = ('urn:publicid:IDN+utah.emulab.us+authority+cm')
 request.addResource(address_pool)
 
 # output RSpec
