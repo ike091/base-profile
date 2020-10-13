@@ -12,7 +12,7 @@ import geni.rspec.igext as igext
 # define some constants
 UBUNTU18_IMG = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD'
 CENTOS7_IMG = 'urn:publicid:IDN+emulab.net+image+emulab-ops:CENTOS7-64-STD'
-SUPPORTED_HARDWARE_TYPES = ['pc3000', 'd430', 'd710']
+SUPPORTED_HARDWARE_TYPES = ['pc3000', 'd430', 'd710', 'xl170']
 SUPPORTED_MODES = ['slate_cluster', 'experiment']
 
 # the number of extra public ip addresses to allocate
@@ -82,6 +82,9 @@ for i in range(params.node_count):
         else:
             node.hardware_type = params.node_type_worker
 
+    # set hardware type for instantiating a SLATE cluster
+    if params.mode == 'slate_cluster':
+        node.hardware_type = 'xl170'
 
     # set the OS on each node
     if params.mode == 'experiment':
