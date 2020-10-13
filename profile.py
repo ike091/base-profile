@@ -29,7 +29,7 @@ pc.defineParameter('node_count', 'Number of nodes', portal.ParameterType.INTEGER
 pc.defineParameter('node_type_master', 'Type of physical node to instantiate master controller on', portal.ParameterType.STRING, 'd430')
 pc.defineParameter('node_type_worker', 'Type of physical node to instantiate workers on (pc3000, d430, d710)', portal.ParameterType.STRING, 'd710')
 pc.defineParameter('mode', 'Type of experiment to instantiate (slate_cluster or experiment)', portal.ParameterType.STRING, 'slate_cluster')
-pc.defineParameter('create_lan', 'Whether to create a virtual LAN between the nodes or not.', portal.ParameterType.BOOLEAN, 'False')
+pc.defineParameter('create_lan', 'Create virtual LAN', portal.ParameterType.BOOLEAN, 'False')
 
 params = pc.bindParameters()
 
