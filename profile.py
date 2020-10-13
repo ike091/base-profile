@@ -49,11 +49,13 @@ if params.mode not in SUPPORTED_MODES:
 
 pc.verifyParameters()
 
-if params.node_count > 1:
-    if params.node_count == 2:
-        lan = request.Link()
-    else:
-        lan = request.LAN()
+# only create lan or link if parameter is enabled
+if params.create_lan:
+    if params.node_count > 1:
+        if params.node_count == 2:
+            lan = request.Link()
+        else:
+            lan = request.LAN()
 
 
 def run_install_script(this_node, script_name):
