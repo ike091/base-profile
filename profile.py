@@ -29,6 +29,7 @@ pc.defineParameter('node_count', 'Number of nodes', portal.ParameterType.INTEGER
 pc.defineParameter('node_type_master', 'Type of physical node to instantiate master controller on', portal.ParameterType.STRING, 'd430')
 pc.defineParameter('node_type_worker', 'Type of physical node to instantiate workers on (pc3000, d430, d710)', portal.ParameterType.STRING, 'd710')
 pc.defineParameter('mode', 'Type of experiment to instantiate (slate_cluster or experiment)', portal.ParameterType.STRING, 'slate_cluster')
+pc.defineParameter('create_lan', 'Whether to create a virtual LAN between the nodes or not.', portal.ParameterType.BOOLEAN, 'False')
 
 params = pc.bindParameters()
 
@@ -66,9 +67,11 @@ for i in range(params.node_count):
     # create a node
     node = request.RawPC('node' + str(i))
 
-    if params.node_count > 1:
-        iface = node.addInterface('eth1')
-        lan.addInterface(iface)
+    # only create a virtual LAN if the create_lan parameter is enabled
+    if params.create_lan:
+        if params.node_count > 1:
+            iface = node.addInterface('eth1')
+            lan.addInterface(iface)
 
     # set the hardware type of each node in experiment mode
     if params.mode == 'experiment':
