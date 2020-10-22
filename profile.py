@@ -26,7 +26,6 @@ pc.defineParameter('node_count', 'Number of nodes', portal.ParameterType.INTEGER
 pc.defineParameter('node_type_master', 'Type of physical node to instantiate master controller on', portal.ParameterType.STRING, 'd430')
 pc.defineParameter('node_type_worker', 'Type of physical node to instantiate workers on (pc3000, d430, d710)', portal.ParameterType.STRING, 'd710')
 pc.defineParameter('mode', 'Type of experiment to instantiate (slate_cluster or experiment)', portal.ParameterType.STRING, 'slate_cluster')
-pc.defineParameter('public_ip_count', 'The number of additional public IPs to allocate', portal.ParameterType.INTEGER, 4)
 pc.defineParameter('create_lan', 'Create virtual LAN', portal.ParameterType.BOOLEAN, 'False')
 
 params = pc.bindParameters()
@@ -35,9 +34,6 @@ params = pc.bindParameters()
 if params.node_count < 1:
     pc.reportError(portal.ParameterError('You must choose at least 1 node.', ['node_count']))
 
-# validate public ip address count
-if params.public_ip_count < 0 or params.public_ip_count > 16:
-    pc.reportError(portal.ParameterError('The number of requested ip addresses must be between 0 and 16.'), ['public_ip_count'])
 
 # validate hardware choices
 if params.node_type_worker not in SUPPORTED_HARDWARE_TYPES:
@@ -116,10 +112,9 @@ for i in range(params.node_count):
 
 
 # request a pool of dynamic publically routable ip addresses at the utah cloudlab location
-if params.public_ip_count > 0:
-    address_pool = igext.AddressPool('address_pool', params.public_ip_count)
-    address_pool.component_manager_id = ('urn:publicid:IDN+utah.cloudlab.us+authority+cm')
-    request.addResource(address_pool)
+address_pool = igext.AddressPool('address_pool', 4)
+address_pool.component_manager_id = ('urn:publicid:IDN+utah.cloudlab.us+authority+cm')
+request.addResource(address_pool)
 
 # output RSpec
 pc.printRequestRSpec(request)
